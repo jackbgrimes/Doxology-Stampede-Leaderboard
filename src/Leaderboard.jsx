@@ -80,7 +80,7 @@ const css = `
     top: 0; left: 0; right: 0;
     height: 100vh;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     overflow: hidden;
   }
 
@@ -449,24 +449,26 @@ function Orbits() {
           </filter>
         </defs>
 
-        {/* Outer glow pass */}
-        <ellipse cx="500" cy="280" rx="440" ry="195"
-          fill="none" stroke="url(#ringGrad1)" strokeWidth="6"
-          transform="rotate(-8, 500, 280)"
-          filter="url(#glow2)" opacity="0.5"
-        />
-        {/* Main sharp ring */}
-        <ellipse cx="500" cy="280" rx="440" ry="195"
-          fill="none" stroke="url(#ringGrad1)" strokeWidth="2"
-          transform="rotate(-8, 500, 280)"
-          filter="url(#glow1)"
-        />
-        {/* Inner secondary ring */}
-        <ellipse cx="500" cy="280" rx="360" ry="150"
-          fill="none" stroke="url(#ringGrad2)" strokeWidth="1"
-          transform="rotate(-8, 500, 280)"
-          filter="url(#glow1)" opacity="0.6"
-        />
+        <g transform="rotate(-8, 500, 280)">
+          <animateTransform attributeName="transform" type="rotate"
+            from="-8 500 280" to="352 500 280" dur="80s" repeatCount="indefinite" />
+
+          {/* Outer glow pass */}
+          <ellipse cx="500" cy="280" rx="440" ry="195"
+            fill="none" stroke="url(#ringGrad1)" strokeWidth="6"
+            filter="url(#glow2)" opacity="0.5"
+          />
+          {/* Main sharp ring */}
+          <ellipse cx="500" cy="280" rx="440" ry="195"
+            fill="none" stroke="url(#ringGrad1)" strokeWidth="2"
+            filter="url(#glow1)"
+          />
+          {/* Inner secondary ring */}
+          <ellipse cx="500" cy="280" rx="360" ry="150"
+            fill="none" stroke="url(#ringGrad2)" strokeWidth="1"
+            filter="url(#glow1)" opacity="0.6"
+          />
+        </g>
 
         {/* Center green radial glow */}
         <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
