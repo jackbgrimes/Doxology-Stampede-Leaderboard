@@ -435,7 +435,7 @@ function Orbits() {
             <stop offset="88%"  stopColor="#FFD600" stopOpacity="0.8" />
             <stop offset="100%" stopColor="#FF3B3B" stopOpacity="0.9" />
             <animateTransform attributeName="gradientTransform" type="rotate"
-              from="0 500 280" to="360 500 280" dur="6s" repeatCount="indefinite" />
+              from="0 500 180" to="360 500 180" dur="6s" repeatCount="indefinite" />
           </linearGradient>
           <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="0%">
             <stop offset="0%"   stopColor="#3B8BFF" stopOpacity="0.5" />
@@ -456,22 +456,21 @@ function Orbits() {
           </radialGradient>
         </defs>
 
-        <ellipse cx="500" cy="280" rx="320" ry="140" fill="url(#centerGlow)" />
+        <ellipse cx="500" cy="180" rx="320" ry="120" fill="url(#centerGlow)" />
 
-        <g transform="rotate(-8, 500, 280)">
-
+        <g transform="rotate(-8, 500, 180)">
           {/* Outer glow pass */}
-          <ellipse cx="500" cy="280" rx="440" ry="195"
+          <ellipse cx="500" cy="180" rx="440" ry="160"
             fill="none" stroke="url(#ringGrad1)" strokeWidth="6"
             filter="url(#glow2)" opacity="0.5"
           />
           {/* Main sharp ring */}
-          <ellipse cx="500" cy="280" rx="440" ry="195"
+          <ellipse cx="500" cy="180" rx="440" ry="160"
             fill="none" stroke="url(#ringGrad1)" strokeWidth="2"
             filter="url(#glow1)"
           />
           {/* Inner secondary ring */}
-          <ellipse cx="500" cy="280" rx="360" ry="150"
+          <ellipse cx="500" cy="180" rx="360" ry="120"
             fill="none" stroke="url(#ringGrad2)" strokeWidth="1"
             filter="url(#glow1)" opacity="0.6"
           />
