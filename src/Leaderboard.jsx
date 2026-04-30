@@ -37,6 +37,10 @@ const css = `
     0%   { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
+  @keyframes ringRotateX {
+    from { transform: rotateX(0deg); }
+    to   { transform: rotateX(360deg); }
+  }
   @keyframes neonFlicker {
     0%, 95%, 100% { opacity: 1; }
     96%           { opacity: 0.8; }
@@ -61,6 +65,7 @@ const css = `
     color: #fff;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
   }
 
   /* ── Stars ── */
@@ -82,6 +87,7 @@ const css = `
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
+    perspective: 900px;
   }
 
   /* ── Content ── */
@@ -423,7 +429,7 @@ function Orbits() {
       <svg
         viewBox="0 0 1000 560"
         preserveAspectRatio="xMidYMid meet"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', animation: 'ringRotateX 25s linear infinite', transformOrigin: 'center center' }}
       >
         <defs>
           <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -456,8 +462,6 @@ function Orbits() {
         <ellipse cx="500" cy="280" rx="320" ry="140" fill="url(#centerGlow)" />
 
         <g>
-          <animateTransform attributeName="transform" type="rotate"
-            from="-8 500 280" to="352 500 280" dur="80s" repeatCount="indefinite" />
           <animateTransform attributeName="transform" type="rotate"
             from="-8 500 280" to="352 500 280" dur="80s" repeatCount="indefinite" />
 
