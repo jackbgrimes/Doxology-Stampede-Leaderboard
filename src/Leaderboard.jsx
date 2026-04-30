@@ -37,11 +37,7 @@ const css = `
     0%   { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
-  @keyframes ringRotateX {
-    from { transform: rotateX(0deg); }
-    to   { transform: rotateX(360deg); }
-  }
-  @keyframes neonFlicker {
+@keyframes neonFlicker {
     0%, 95%, 100% { opacity: 1; }
     96%           { opacity: 0.8; }
     97%           { opacity: 1; }
@@ -85,9 +81,7 @@ const css = `
     top: 0; left: 0; right: 0;
     height: 100vh;
     pointer-events: none;
-    z-index: 0;
     overflow: hidden;
-    perspective: 900px;
   }
 
   /* ── Content ── */
@@ -429,16 +423,18 @@ function Orbits() {
       <svg
         viewBox="0 0 1000 560"
         preserveAspectRatio="xMidYMid meet"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', animation: 'ringRotateX 25s linear infinite', transformOrigin: 'center center' }}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
         <defs>
-          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id="ringGrad1" gradientUnits="userSpaceOnUse" x1="500" y1="85" x2="500" y2="475">
             <stop offset="0%"   stopColor="#FF3B3B" stopOpacity="0.9" />
             <stop offset="20%"  stopColor="#cc44ff" stopOpacity="0.85" />
             <stop offset="45%"  stopColor="#3B8BFF" stopOpacity="0.9" />
             <stop offset="70%"  stopColor="#2EE89A" stopOpacity="0.95" />
             <stop offset="88%"  stopColor="#FFD600" stopOpacity="0.8" />
             <stop offset="100%" stopColor="#FF3B3B" stopOpacity="0.9" />
+            <animateTransform attributeName="gradientTransform" type="rotate"
+              from="0 500 280" to="360 500 280" dur="6s" repeatCount="indefinite" />
           </linearGradient>
           <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="0%">
             <stop offset="0%"   stopColor="#3B8BFF" stopOpacity="0.5" />
