@@ -76,8 +76,9 @@ const css = `
 
   /* ── Orbital ring ── */
   .orbit-wrap {
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 100vh;
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
