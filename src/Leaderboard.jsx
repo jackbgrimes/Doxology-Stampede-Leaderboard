@@ -76,14 +76,6 @@ const css = `
     animation: starFloat linear infinite;
   }
 
-  /* ── Orbital ring ── */
-  .orbit-wrap {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 100vh;
-    pointer-events: none;
-    overflow: hidden;
-  }
 
   /* ── Content ── */
   .lb-content {
@@ -205,27 +197,14 @@ const css = `
     text-align: center;
     position: relative;
     z-index: 200;
-    transition: transform 0.3s;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
+    transition: transform 0.3s, box-shadow 0.3s;
     backdrop-filter: blur(10px);
   }
   .podium-card:hover { transform: translateY(-4px); }
-  .podium-card.rank-1 {
-    padding-top: 40px;
-    border-color: rgba(255,214,0,0.4);
-    box-shadow: 0 0 40px rgba(255,214,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
-  }
-  .podium-card.rank-2 {
-    padding-top: 28px;
-  }
-  .podium-card.rank-3 {
-    padding-top: 20px;
-  }
-  .podium-card.rank-4 {
-    padding-top: 16px;
-    opacity: 0.75;
-  }
+  .podium-card.rank-1 { padding-top: 40px; }
+  .podium-card.rank-2 { padding-top: 28px; }
+  .podium-card.rank-3 { padding-top: 20px; }
+  .podium-card.rank-4 { padding-top: 16px; opacity: 0.85; }
   .crown {
     position: absolute;
     top: -22px; left: 50%;
@@ -418,69 +397,6 @@ function Stars() {
   )
 }
 
-// ─── Orbital rings ────────────────────────────────────────────────────────────
-function Orbits() {
-  return (
-    <div className="orbit-wrap">
-      <svg
-        viewBox="0 0 1000 560"
-        preserveAspectRatio="xMidYMid meet"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
-      >
-        <defs>
-          <linearGradient id="ringGrad1" gradientUnits="userSpaceOnUse" x1="500" y1="85" x2="500" y2="475">
-            <stop offset="0%"   stopColor="#FF3B3B" stopOpacity="0.9" />
-            <stop offset="20%"  stopColor="#cc44ff" stopOpacity="0.85" />
-            <stop offset="45%"  stopColor="#3B8BFF" stopOpacity="0.9" />
-            <stop offset="70%"  stopColor="#2EE89A" stopOpacity="0.95" />
-            <stop offset="88%"  stopColor="#FFD600" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#FF3B3B" stopOpacity="0.9" />
-            <animateTransform attributeName="gradientTransform" type="rotate"
-              from="0 500 180" to="360 500 180" dur="6s" repeatCount="indefinite" />
-          </linearGradient>
-          <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="0%">
-            <stop offset="0%"   stopColor="#3B8BFF" stopOpacity="0.5" />
-            <stop offset="50%"  stopColor="#2EE89A" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#FF3B3B" stopOpacity="0.5" />
-          </linearGradient>
-          <filter id="glow1" x="-20%" y="-40%" width="140%" height="180%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-          <filter id="glow2" x="-20%" y="-40%" width="140%" height="180%">
-            <feGaussianBlur stdDeviation="10" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-          <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stopColor="#2EE89A" stopOpacity="0.12" />
-            <stop offset="100%" stopColor="#2EE89A" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        <ellipse cx="500" cy="180" rx="320" ry="120" fill="url(#centerGlow)" />
-
-        <g transform="rotate(-8, 500, 180)">
-          {/* Outer glow pass */}
-          <ellipse cx="500" cy="180" rx="440" ry="160"
-            fill="none" stroke="url(#ringGrad1)" strokeWidth="6"
-            filter="url(#glow2)" opacity="0.5"
-          />
-          {/* Main sharp ring */}
-          <ellipse cx="500" cy="180" rx="440" ry="160"
-            fill="none" stroke="url(#ringGrad1)" strokeWidth="2"
-            filter="url(#glow1)"
-          />
-          {/* Inner secondary ring */}
-          <ellipse cx="500" cy="180" rx="360" ry="120"
-            fill="none" stroke="url(#ringGrad2)" strokeWidth="1"
-            filter="url(#glow1)" opacity="0.6"
-          />
-        </g>
-
-      </svg>
-    </div>
-  )
-}
 
 // ─── Main Leaderboard ────────────────────────────────────────────────────────
 export default function Leaderboard() {
@@ -529,7 +445,6 @@ export default function Leaderboard() {
       <style>{css}</style>
       <div className="lb-root">
         <Stars />
-        <Orbits />
         <div className="lb-content">
 
           {/* Header */}
@@ -576,10 +491,9 @@ export default function Leaderboard() {
                     key={team.id}
                     className={`podium-card rank-${rankIdx + 1}`}
                     style={{
-                      borderColor: isFirst ? 'rgba(255,214,0,0.4)' : `${team.color}33`,
-                      boxShadow: isFirst
-                        ? `0 0 40px rgba(255,214,0,0.12), 0 0 80px ${team.glow}`
-                        : `0 0 30px ${team.glow}`,
+                      border: `1px solid ${team.color}99`,
+                      background: `linear-gradient(160deg, ${team.color}18 0%, #07080f 60%)`,
+                      boxShadow: `0 0 18px ${team.color}66, 0 0 40px ${team.color}33, inset 0 0 20px ${team.color}11`,
                     }}
                   >
                     {isFirst && <div className="crown">👑</div>}
