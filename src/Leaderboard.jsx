@@ -80,7 +80,7 @@ const css = `
     top: 0; left: 0; right: 0;
     height: 100vh;
     pointer-events: none;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
   }
 
@@ -447,9 +447,17 @@ function Orbits() {
             <feGaussianBlur stdDeviation="10" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
+          <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="#2EE89A" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#2EE89A" stopOpacity="0" />
+          </radialGradient>
         </defs>
 
-        <g transform="rotate(-8, 500, 280)">
+        <ellipse cx="500" cy="280" rx="320" ry="140" fill="url(#centerGlow)" />
+
+        <g>
+          <animateTransform attributeName="transform" type="rotate"
+            from="-8 500 280" to="352 500 280" dur="80s" repeatCount="indefinite" />
           <animateTransform attributeName="transform" type="rotate"
             from="-8 500 280" to="352 500 280" dur="80s" repeatCount="indefinite" />
 
@@ -470,12 +478,6 @@ function Orbits() {
           />
         </g>
 
-        {/* Center green radial glow */}
-        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stopColor="#2EE89A" stopOpacity="0.12" />
-          <stop offset="100%" stopColor="#2EE89A" stopOpacity="0" />
-        </radialGradient>
-        <ellipse cx="500" cy="280" rx="320" ry="140" fill="url(#centerGlow)" />
       </svg>
     </div>
   )
