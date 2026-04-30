@@ -56,7 +56,7 @@ const css = `
 
   .lb-root {
     min-height: 100vh;
-    background: #050508;
+    background: radial-gradient(ellipse at 50% 38%, #0b1f14 0%, #07080f 55%, #050508 100%);
     font-family: 'Exo 2', sans-serif;
     color: #fff;
     position: relative;
@@ -74,29 +74,13 @@ const css = `
     animation: starFloat linear infinite;
   }
 
-  /* ── Orbital rings ── */
+  /* ── Orbital ring ── */
   .orbit-wrap {
     position: fixed;
-    top: 50%; left: 50%;
-    width: min(900px, 120vw);
-    height: min(900px, 120vw);
-    transform: translate(-50%, -50%);
+    inset: 0;
     pointer-events: none;
     z-index: 0;
-  }
-  .orbit-ring {
-    position: absolute; inset: 0;
-    border-radius: 50%;
-    border: 1.5px solid transparent;
-    animation: orbitSpin 18s linear infinite;
-  }
-  .orbit-ring-2 {
-    animation: orbitSpinReverse 24s linear infinite;
-    inset: 60px;
-  }
-  .orbit-ring-3 {
-    animation: orbitSpin 34s linear infinite;
-    inset: 120px;
+    overflow: hidden;
   }
 
   /* ── Content ── */
@@ -435,15 +419,61 @@ function Stars() {
 function Orbits() {
   return (
     <div className="orbit-wrap">
-      <div className="orbit-ring" style={{
-        background: 'conic-gradient(from 0deg, transparent 60%, #2EE89A44, #3B8BFF44, #FF3B3B44, #FFD60044, transparent)',
-      }} />
-      <div className="orbit-ring orbit-ring-2" style={{
-        background: 'conic-gradient(from 90deg, transparent 70%, #FFD60033, #2EE89A33, transparent)',
-      }} />
-      <div className="orbit-ring orbit-ring-3" style={{
-        background: 'conic-gradient(from 200deg, transparent 75%, #FF3B3B22, #3B8BFF22, transparent)',
-      }} />
+      <svg
+        viewBox="0 0 1000 560"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      >
+        <defs>
+          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stopColor="#FF3B3B" stopOpacity="0.9" />
+            <stop offset="20%"  stopColor="#cc44ff" stopOpacity="0.85" />
+            <stop offset="45%"  stopColor="#3B8BFF" stopOpacity="0.9" />
+            <stop offset="70%"  stopColor="#2EE89A" stopOpacity="0.95" />
+            <stop offset="88%"  stopColor="#FFD600" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#FF3B3B" stopOpacity="0.9" />
+          </linearGradient>
+          <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="0%">
+            <stop offset="0%"   stopColor="#3B8BFF" stopOpacity="0.5" />
+            <stop offset="50%"  stopColor="#2EE89A" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#FF3B3B" stopOpacity="0.5" />
+          </linearGradient>
+          <filter id="glow1" x="-20%" y="-40%" width="140%" height="180%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <filter id="glow2" x="-20%" y="-40%" width="140%" height="180%">
+            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+
+        {/* Outer glow pass */}
+        <ellipse cx="500" cy="280" rx="440" ry="195"
+          fill="none" stroke="url(#ringGrad1)" strokeWidth="6"
+          transform="rotate(-8, 500, 280)"
+          filter="url(#glow2)" opacity="0.5"
+        />
+        {/* Main sharp ring */}
+        <ellipse cx="500" cy="280" rx="440" ry="195"
+          fill="none" stroke="url(#ringGrad1)" strokeWidth="2"
+          transform="rotate(-8, 500, 280)"
+          filter="url(#glow1)"
+        />
+        {/* Inner secondary ring */}
+        <ellipse cx="500" cy="280" rx="360" ry="150"
+          fill="none" stroke="url(#ringGrad2)" strokeWidth="1"
+          transform="rotate(-8, 500, 280)"
+          filter="url(#glow1)" opacity="0.6"
+        />
+
+        {/* Center green radial glow */}
+        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#2EE89A" stopOpacity="0.12" />
+          <stop offset="100%" stopColor="#2EE89A" stopOpacity="0" />
+        </radialGradient>
+        <ellipse cx="500" cy="280" rx="320" ry="140" fill="url(#centerGlow)" />
+      </svg>
     </div>
   )
 }
