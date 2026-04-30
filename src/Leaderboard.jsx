@@ -457,9 +457,7 @@ function Orbits() {
 
         <ellipse cx="500" cy="280" rx="320" ry="140" fill="url(#centerGlow)" />
 
-        <g>
-          <animateTransform attributeName="transform" type="rotate"
-            from="-8 500 280" to="352 500 280" dur="80s" repeatCount="indefinite" />
+        <g transform="rotate(-8, 500, 280)">
 
           {/* Outer glow pass */}
           <ellipse cx="500" cy="280" rx="440" ry="195"
