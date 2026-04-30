@@ -62,6 +62,7 @@ const css = `
     position: relative;
     overflow: hidden;
     isolation: isolate;
+    z-index: 0;
   }
 
   /* ── Stars ── */
@@ -86,7 +87,7 @@ const css = `
 
   /* ── Content ── */
   .lb-content {
-    position: relative; z-index: 1;
+    position: relative; z-index: 50;
     max-width: 1100px;
     margin: 0 auto;
     padding: 40px 24px 80px;
