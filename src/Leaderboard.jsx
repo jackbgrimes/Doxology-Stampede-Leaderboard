@@ -204,6 +204,7 @@ const css = `
     padding: 24px 16px 20px;
     text-align: center;
     position: relative;
+    z-index: 200;
     transition: transform 0.3s;
     border: 1px solid rgba(255,255,255,0.08);
     background: rgba(255,255,255,0.03);
